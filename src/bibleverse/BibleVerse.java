@@ -90,12 +90,19 @@ public class BibleVerse {
         return text;
     }
     
-    public void BibleVerseTTS(String verse) {
+    public void BibleVerseTTS(String verse, boolean quit) {
     try {  
             //setting properties as Kevin Dictionary  
+            /*
+            System.setProperty("freetts.voices",
+                                   "com.sun.speech.freetts.en.us"
+                                   + ".cmu_us_kal.KevinVoiceDirectory");
+            */
+            
+            // setting properties as MBROLA
             System.setProperty("freetts.voices", 
-                                  "com.sun.speech.freetts.en.us" 
-                                  + ".cmu_us_kal.KevinVoiceDirectory");  
+                                  "de.dfki.lt.freetts.en.us" 
+                                  + ".MbrolaVoiceDirectory");  
             
             //registering speech engine  
             Central.registerEngineCentral("com.sun.speech.freetts" 
@@ -115,8 +122,10 @@ public class BibleVerse {
             synthesizer.speakPlainText(verse, null);  
             synthesizer.waitEngineState(Synthesizer.QUEUE_EMPTY);  
             
+            if (quit){
             //deallocating the Synthesizer  
             synthesizer.deallocate();  
+            }
         }  
         catch (Exception e){  
             e.printStackTrace();  
@@ -145,15 +154,16 @@ public class BibleVerse {
             BibleVerse bvo = new BibleVerse(book, chapter, verse);
             
             // Get the bible verse string and pass it to TTS to read it
-            bvo.BibleVerseTTS(bvo.getVerseText());
-            bvo = null;
+            bvo.BibleVerseTTS(bvo.getVerseText(), endLoop);
+            
             // quit loop?
             System.out.println("Enter 'q' to quit or  any other key to continue:");
             String choice = scnr.next();
 
             if (choice.equals("q")) {
                 endLoop = true;
-                System.out.println("God bless you");
+                bvo.BibleVerseTTS("God bless you", endLoop);
+                //System.out.println("God bless you");
             }
 
             scnr.nextLine();
