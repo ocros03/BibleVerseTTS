@@ -93,17 +93,18 @@ public class BibleVerse {
     public void BibleVerseTTS(String verse, boolean quit) {
     try {  
             //setting properties as Kevin Dictionary  
-            /*
+            
             System.setProperty("freetts.voices",
                                    "com.sun.speech.freetts.en.us"
                                    + ".cmu_us_kal.KevinVoiceDirectory");
-            */
+            
             
             // setting properties as MBROLA
+            /*
             System.setProperty("freetts.voices", 
                                   "de.dfki.lt.freetts.en.us" 
                                   + ".MbrolaVoiceDirectory");  
-            
+            */
             //registering speech engine  
             Central.registerEngineCentral("com.sun.speech.freetts" 
                     + ".jsapi.FreeTTSEngineCentral");  
